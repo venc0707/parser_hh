@@ -1,0 +1,19 @@
+[project]
+name = "parser-hh-ru-to-file"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Rodion Ventslovsky",email = "vents_23@mail.ru"}
+]
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+]
+
+[tool.poetry]
+packages = [{include = "parser_hh"}]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

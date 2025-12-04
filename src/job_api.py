@@ -43,9 +43,7 @@ class HeadHunterAPI(JobApi):
 
 
     def get_vacancies(self, search_query: str, per_page: int = 100):
-        """ Получение вакансий с hh.ru по заданным параметрам
-             Args:
-                search_query: Поисковый запрос """
+        """ Получение вакансий с hh.ru по заданным параметрам """
 
         params = {'text': search_query,
                   'per_page': per_page
@@ -58,8 +56,7 @@ class HeadHunterAPI(JobApi):
             response.raise_for_status()
 
             data = response.json()
-            items = data.get("items", [])
-            return items
+            return data.get("items", [])
 
         except requests.exceptions.Timeout:
             raise ConnectionError("Превышено время ожидания ответа от API")

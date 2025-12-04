@@ -33,7 +33,7 @@ class JSONSaver(JobJSON):
     def _ensure_file_exists(self):
         """Создает пустой файл, если он не существует"""
 
-        os.makedirs('data', exist_ok=True)
+        os.makedirs('../data', exist_ok=True)
 
         if not os.path.exists(self.file_path):
             try:

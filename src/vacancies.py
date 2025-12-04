@@ -65,7 +65,7 @@ class Vacancy:
 
     @property
     def description(self) -> str:
-        return self.description
+        return self._description
 
     @description.setter
     def description(self, value: str):
@@ -77,17 +77,15 @@ class Vacancy:
         return self._average_salary
 
     def _calculate_average_salary(self) -> float:
-        """ Вычисление средней зарплаты из диапазона """
+        """Вычисление средней зарплаты из диапазона"""
         if not self._salary_range:
             return 0.0
 
         try:
-            # Упрощенный парсинг для формата "100 000-150 000 руб."
-            # Удаляем все нецифровые символы кроме цифр и дефиса
             import re
 
-            # Очищаем строку от пробелов, букв, символов валюты
-            clean = re.sub(r'[^\d\s-]', '', self._salary_range)
+            # Очищаем строку от всех нецифровых символов (ВКЛЮЧАЯ пробелы)
+            clean = re.sub(r'[^\d-]', '', self._salary_range)  # Убрали \s!
 
             # Ищем числа в строке
             numbers = re.findall(r'\d+', clean)
@@ -106,6 +104,25 @@ class Vacancy:
         except (ValueError, IndexError, AttributeError):
             return 0.0
 
+    def __lt__(self, other: 'Vacancy') -> bool:
+            """Сравнение вакансий по средней зарплате (меньше)"""
+            if not isinstance(other, Vacancy):
+                return NotImplemented
+            return self._average_salary < other._average_salary
+
+    def __eq__(self, other: object) -> bool:
+            """Сравнение вакансий"""
+            if not isinstance(other, Vacancy):
+                return NotImplemented
+            return (self._title == other._title and
+                    self._company == other._company and
+                    self._url == other._url)
+
 if __name__ == '__main__':
-    vacancy = Vacancy("Python Developer","Google", "https://hh.ru/vacancy/123456", "100 000-150 000 руб.",
+    vacancy1 = Vacancy("Python Developer","Google", "https://hh.ru/vacancy/123456", "100 000-150 000 руб.",
                       "Требования: опыт работы от 3 лет...")
+    vacancy2 = Vacancy("Pyth Developer","Googl", "https://hh.ru/vacancy/3456", "100 000-180 000 руб.",
+                      "Требования: опыт работы от 3 лет...")
+
+    print(vacancy1 < vacancy2)
+    print(vacancy2 == vacancy1)

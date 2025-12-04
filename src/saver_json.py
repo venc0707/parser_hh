@@ -25,7 +25,7 @@ class JSONSaver(JobJSON):
 
     def __init__(self, filename: str = 'vacancies.json'):
         self.__filename = filename
-        self.file_path = f'data/{self.__filename}'
+        self.file_path = f'../data/{self.__filename}'
         
         self._ensure_file_exists()
 
